@@ -27,29 +27,29 @@ export class UsersController {
         private readonly accessibilityService: AccessibilityService
     ) { }
 
-    @Get('/chart')
-    async GetChart(@Req() req: any, @Res() res: Response) {
-        try {
-            let lables: string[] = []
-            let dataset: number[] = []
-            const data: UsersChart[] = await this.userService.get_sum() 
+    // @Get('/chart')
+    // async GetChart(@Req() req: any, @Res() res: Response) {
+    //     try {
+    //         let lables: string[] = []
+    //         let dataset: number[] = []
+    //         const data: UsersChart[] = await this.userService.get_sum() 
 
-            data.map((item: UsersChart) => {
-                lables.push(PMonth[item.user_month])
-                dataset.push(Number(item.numberOfReports))
-            })
+    //         data.map((item: UsersChart) => {
+    //             lables.push(PMonth[item.user_month])
+    //             dataset.push(Number(item.numberOfReports))
+    //         })
             
-            res.send({
-                lables: lables,
-                dataset: dataset,
-                data: data
-            })
-        } catch (e) {
-            console.error(e)
-            if (e.isThrow) return res.status(HttpStatus.METHOD_NOT_ALLOWED).send(errorMessages.CHECK_YOUR_DATA);
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(errorMessages.INTERNAL_SERVER);
-        }
-    }
+    //         res.send({
+    //             lables: lables,
+    //             dataset: dataset,
+    //             data: data
+    //         })
+    //     } catch (e) {
+    //         console.error(e)
+    //         if (e.isThrow) return res.status(HttpStatus.METHOD_NOT_ALLOWED).send(errorMessages.CHECK_YOUR_DATA);
+    //         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(errorMessages.INTERNAL_SERVER);
+    //     }
+    // }
 
     @Post()
     async addUser(@Req() req: any, @Body() body: CreateUserDto, @Res() res: Response) {
@@ -76,7 +76,6 @@ export class UsersController {
             this.logsService.addLog({
                 action: logsActions.ADD_USER,
                 title: body.username,
-                organization: userInfo.organization,
                 role: userInfo.roleId,
                 user: userInfo.id,
                 ip: req.connection.remoteAddress
@@ -102,7 +101,6 @@ export class UsersController {
             await this.logsService.addLog({
                 action: logsActions.UPDATE_PROFILE_DETAILS,
                 title: "",
-                organization: userInfo.organization,
                 role: userInfo.roleId,
                 user: userInfo.id,
                 ip: req.connection.remoteAddress

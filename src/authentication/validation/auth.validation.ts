@@ -22,17 +22,32 @@ class Validate {
     }
 
     login(items: any) {
-        // /^[\u0600-\u06FF\sA-Za-z]+$/ persion and english
-        delete items.id
         const schema = new Schema({
-            username: _.assign({}, {
+            phone: _.assign({}, {
                 type: String,
-                match: /^(?:[a-zA-Z\d]+(?:(?:\.|-|_)[a-zA-Z\d])*)+$/,
+                match: /^[0-9]*$/,
+                required: true,
+            })
+        })
+
+        schema.message(this.errorMessages);
+
+        return this.sanitizeErrors(
+            schema.validate(_.assign({}, items)),
+            true,
+        );
+    }
+
+    verify(items: any) {
+        const schema = new Schema({
+            phone: _.assign({}, {
+                type: String,
+                match: /^[0-9]*$/,
                 required: true,
             }),
-            password: _.assign({}, {
+            code: _.assign({}, {
                 type: String,
-                match: /^[0-9a-zA-Z]*$/,
+                match: /^[0-9]*$/,
                 required: true,
             })
         })

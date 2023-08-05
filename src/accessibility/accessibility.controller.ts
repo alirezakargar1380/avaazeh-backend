@@ -3,17 +3,13 @@ import { AccessibilityService } from './accessibility.service';
 import { Response, Request } from 'express';
 import { RoleService } from 'src/role/role.service';
 import succssMessages from 'src/shared/constants/succssMessages';
-import { ReportsAcc } from 'src/reports-acc/entitys/reports.acc.entity';
 import errorMessages from 'src/shared/constants/errorMessages';
-import { RoleAccService } from 'src/role-acc/role-acc.service';
-import { RolesAcc } from 'src/role-acc/entitys/roles.acc.entity';
 
 @Controller('accessibility')
 export class AccessibilityController {
     constructor(
         private readonly accessibilityService: AccessibilityService,
-        private readonly roleService: RoleService,
-        private readonly rolesAccService: RoleAccService
+        private readonly roleService: RoleService
     ) { }
 
     @Get('/')
@@ -29,10 +25,6 @@ export class AccessibilityController {
     @Get('/:per_page_data/:page')
     async getAccessibility(@Req() req: Request, @Body() body: any, @Res() res: Response) {
         try {
-            const rolesAcc: RolesAcc = await this.rolesAccService.get(res.locals.decoded.roleId)
-            if (!rolesAcc.get)
-                return res.status(HttpStatus.UNAUTHORIZED).send(errorMessages.CANT_ACCESS_HERE)
-
             res.status(HttpStatus.ACCEPTED).send(await this.accessibilityService.findAll())
         } catch (error) {
 
@@ -42,11 +34,6 @@ export class AccessibilityController {
     @Get('/:id')
     async get_one_by_id(@Body() body: any, @Param() param: any, @Res() res: Response) {
         try {
-            const rolesAcc: RolesAcc = await this.rolesAccService.get(res.locals.decoded.roleId)
-            if (!rolesAcc.get)
-                return res.status(HttpStatus.UNAUTHORIZED).send(errorMessages.CANT_ACCESS_HERE)
-                
-            console.log('--->')
             res.status(HttpStatus.ACCEPTED)
                 .send(await this.accessibilityService.findOneAccessiblityByRoleId(Number(param.id)))
         } catch (error) {

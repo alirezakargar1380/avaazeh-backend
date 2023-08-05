@@ -7,15 +7,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { Accessbility } from './entitys/accessibility.entity';
 import { RoleService } from 'src/role/role.service';
 import { Role } from 'src/role/entitys/role.entity';
-import { RolesAcc } from '../role-acc/entitys/roles.acc.entity';
-import { RoleAccService } from 'src/role-acc/role-acc.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       Accessbility,
-      Role,
-      RolesAcc
+      Role
     ]),
     JwtModule.register({
       secret: process.env.JWT_AUTH_SECRET,
@@ -25,8 +22,7 @@ import { RoleAccService } from 'src/role-acc/role-acc.service';
   controllers: [AccessibilityController],
   providers: [
     AccessibilityService,
-    RoleService,
-    RoleAccService
+    RoleService
   ]
 })
 export class AccessibilityModule {

@@ -1,8 +1,4 @@
-import { City } from 'src/city/entitys/city.entity';
-import { Organization } from 'src/organization/entitys/organization.entity';
-import { ProjectStatus } from 'src/project_status/entitys/project_status.entity';
 import { Role } from 'src/role/entitys/role.entity';
-import { Uploader } from 'src/uploader/entitys/uploader.entity';
 import { User } from 'src/users/entitys/users.entity';
 import { Entity, Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToOne } from 'typeorm';
 
@@ -26,7 +22,7 @@ export class Logs {
         onUpdate: 'SET NULL',
         nullable: true,
         createForeignKeyConstraints: false
-    }) 
+    })
     @JoinColumn()
     user: User
 
@@ -35,18 +31,9 @@ export class Logs {
         onUpdate: 'SET NULL',
         nullable: true,
         createForeignKeyConstraints: false
-    }) 
+    })
     @JoinColumn()
     role: Role
-
-    @ManyToOne(() => Organization, {
-        onDelete: 'SET NULL',
-        onUpdate: 'SET NULL',
-        nullable: true,
-        createForeignKeyConstraints: false
-    }) 
-    @JoinColumn()
-    organization: Organization
 
     @CreateDateColumn()
     createdAt: Date

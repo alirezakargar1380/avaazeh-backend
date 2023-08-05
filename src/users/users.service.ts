@@ -28,14 +28,7 @@ export class UsersService {
       .getRawMany()
   }
 
-  async save(data: CreateUserDto | any): Promise<User> {
-    const saltRounds: number = 10
-    data.password = await bcrypt.genSalt(saltRounds).then((salt: string) => {
-      return bcrypt.hash(data.password, salt)
-    }).then((hash: string) => {
-      return hash
-    })
-
+  save(data: CreateUserDto | any): Promise<User> {
     return this.usersRepository.save({
       ...data,
       year: p_date.year,
@@ -44,17 +37,17 @@ export class UsersService {
   }
 
   async updatePassword(userId: number, password: string) {
-    let bcryptedPass: string = ""
-    const saltRounds: number = 10
-    bcryptedPass = await bcrypt.genSalt(saltRounds).then((salt: string) => {
-      return bcrypt.hash(password, salt)
-    }).then((hash: string) => {
-      return hash
-    })
+    // let bcryptedPass: string = ""
+    // const saltRounds: number = 10
+    // bcryptedPass = await bcrypt.genSalt(saltRounds).then((salt: string) => {
+    //   return bcrypt.hash(password, salt)
+    // }).then((hash: string) => {
+    //   return hash
+    // })
 
-    await this.usersRepository.update({ id: userId }, {
-      password: bcryptedPass
-    })
+    // await this.usersRepository.update({ id: userId }, {
+    //   password: bcryptedPass
+    // })
   }
 
   findAll(perPage: number, page: number, query: any, usersAcc: UsersAcc, all_organ_access: boolean, organ_id: number): Promise<User[]> {
@@ -77,20 +70,14 @@ export class UsersService {
 
     return this.usersRepository.find({
       relations: {
-        organization: true,
         role: true
       },
       where: {
-        organization: organization,
         role: role
       },
       select: {
         fullName: true,
         id: true,
-        username: true,
-        organization: {
-          organization_name: true
-        },
         role: {
           title: true
         },
@@ -117,11 +104,9 @@ export class UsersService {
 
     return this.usersRepository.count({
       relations: {
-        organization: true,
         role: true
       },
       where: {
-        organization: organization,
         role: role
       }
     })
@@ -135,7 +120,6 @@ export class UsersService {
     return this.usersRepository.findOne({
       where: { id: id },
       relations: {
-        organization: true,
         role: true
       },
       select: {
@@ -143,14 +127,10 @@ export class UsersService {
         email: true,
         fullName: true,
         id: true,
-        organization: {
-          id: true
-        },
         phone: true,
         role: {
           id: true
-        },
-        username: true
+        }
       }
     });
   }

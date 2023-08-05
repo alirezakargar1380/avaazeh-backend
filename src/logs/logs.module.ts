@@ -7,12 +7,10 @@ import { userLoginChecker } from 'src/shared/middlewares/userLoginChecker.middle
 import { Accessbility } from 'src/accessibility/entitys/accessibility.entity';
 import { AccessibilityService } from 'src/accessibility/accessibility.service';
 import { JwtModule } from '@nestjs/jwt';
-import { LogsAcc } from 'src/logs-acc/entitys/logs.acc.entity';
-import { LogsAccService } from 'src/logs-acc/logs-acc.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Logs, Accessbility, LogsAcc]),
+    TypeOrmModule.forFeature([Logs, Accessbility]),
     JwtModule.register({
       secret: process.env.JWT_AUTH_SECRET,
       signOptions: { expiresIn: process.env.JWT_AUTH_TIME },
@@ -20,7 +18,7 @@ import { LogsAccService } from 'src/logs-acc/logs-acc.service';
   ],
   
   controllers: [LogsController],
-  providers: [LogsService, AccessibilityService, LogsAccService]
+  providers: [LogsService, AccessibilityService]
 })
 export class LogsModule {
   configure(consumer: MiddlewareConsumer) {

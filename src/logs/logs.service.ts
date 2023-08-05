@@ -14,7 +14,7 @@ export class LogsService {
     ) { }
 
     async addLog(data: ICreateLog) {
-        data.ip = await axios.get("https://api.ipify.org/").then(({data}: any) => {return data}).catch((e) => { return '' })
+        // data.ip = await axios.get("https://api.ipify.org/").then(({data}: any) => {return data}).catch((e) => { return '' })
         await this.LogsRepository.save({
             ...data,
             date: p_date.year + "/" + p_date.month + "/" + p_date.day
@@ -52,7 +52,6 @@ export class LogsService {
 
         return this.LogsRepository.find({
             where: {
-                organization: condition_organization,
                 user: condition_user
             },
             order: {
@@ -60,7 +59,6 @@ export class LogsService {
             },
             relations: {
                 role: true,
-                organization: true,
                 user: true
             },
             take: pagination.getTakeAndSkip().take,
@@ -83,7 +81,6 @@ export class LogsService {
         }
         return this.LogsRepository.count({
             where: {
-                organization: condition_organization,
                 user: condition_user
             }
         })

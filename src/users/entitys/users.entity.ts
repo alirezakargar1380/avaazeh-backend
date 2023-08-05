@@ -1,4 +1,3 @@
-import { Organization } from 'src/organization/entitys/organization.entity';
 import { Role } from 'src/role/entitys/role.entity';
 import { Entity, Column, JoinColumn, PrimaryGeneratedColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToOne } from 'typeorm';
 
@@ -9,11 +8,6 @@ export class User {
     id: number;
 
     @Column({
-        unique: true
-    })
-    username: string;
-
-    @Column({
         nullable: true
     })
     email: string;
@@ -22,11 +16,13 @@ export class User {
     fullName: string;
 
     @Column({
-        default: false
+        default: true
     })
     active: boolean;
 
-    @Column()
+    @Column({
+        unique: true
+    })
     phone: string;
 
     @ManyToOne(() => Role, {
@@ -40,15 +36,6 @@ export class User {
 
     @Column()
     year: number;
-
-    @ManyToOne(() => Organization, { 
-        onDelete: 'RESTRICT'
-    })
-    @JoinColumn()
-    organization: Organization;
-
-    @Column()
-    password: string;
 
     @CreateDateColumn()
     createdAt: Date

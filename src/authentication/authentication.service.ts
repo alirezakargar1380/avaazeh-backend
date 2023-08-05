@@ -15,17 +15,16 @@ export class AuthenticationService {
         @InjectRepository(User)
         private usersRepository: Repository<User>,
         private jwtService: JwtService,
-        private logsService: LogsService
+        private logsService: LogsService,
     ) { }
 
-    async login(username: string, password: string) {
+    async getUserToken(phone: string) {
         const user: User | null = await this.usersRepository.findOne({
             where: {
-                username: username
+                phone: phone
             },
             relations: {
-                role: true,
-                organization: true
+                role: true
             }
         })
 
@@ -35,43 +34,36 @@ export class AuthenticationService {
             throw new Error(loginMessages.usernameOrPassword)
         }
 
-        const passwordCheck: boolean = await bcrypt
-            .compare(password, user.password)
-            .then(res => {
-                console.log("res", res)
-                return res
-            })
+        // const passwordCheck: boolean = await bcrypt
+        //     .compare(password, user.password)
+        //     .then(res => {
+        //         console.log("res", res)
+        //         return res
+        //     })
 
-        if (!passwordCheck) {
-            this.logsService.addLog({
-                action: logsActions.LOGIN_FAILED,
-                title: 'پسورد را اشتباه وارد کرد',
-                organization: user.organization,
-                role: user.role,
-                user: user,
-                ip: ""
-            })
-            throw new Error(loginMessages.usernameOrPassword)
-        }
-        
-        if (!user.organization) throw new Error('سازمان کاربر مشخص نیست!')
+        // if (!passwordCheck) {
+        //     this.logsService.addLog({
+        //         action: logsActions.LOGIN_FAILED,
+        //         title: 'پسورد را اشتباه وارد کرد',
+        //         role: user.role,
+        //         user: user,
+        //         ip: ""
+        //     })
+        //     throw new Error(loginMessages.usernameOrPassword)
+        // }
 
         await this.logsService.addLog({
             action: logsActions.LOGIN_SCCUSS,
             title: '',
-            organization: user.organization,
             role: user.role,
-            user: user,
-            ip: ""
+            user: user
         })
 
-        const payload: JWT_TOKEN = { id: user.id, roleId: user.role?.id, organization: user.organization?.id }
+        const payload: JWT_TOKEN = { id: user.id, roleId: user.role?.id }
         return {
             access_token: this.jwtService.sign(payload),
             role: user.role.title,
-            fullName: user.fullName,
-            organization: user.organization.organization_name,
-            organization_id: user.organization.id
+            fullName: user.fullName
         }
     }
 }

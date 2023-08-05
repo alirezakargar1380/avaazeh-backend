@@ -2,13 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Accessbility } from './entitys/accessibility.entity';
-import { LogsAcc } from '../logs-acc/entitys/logs.acc.entity';
-import { ProjectsAcc } from '../projects-acc/entitys/projects.acc.entity';
-import { ReportsAcc } from '../reports-acc/entitys/reports.acc.entity';
-import { RolesAcc } from '../role-acc/entitys/roles.acc.entity';
 import { SettingsAcc } from '../settings-acc/entitys/settings.acc.entity';
 import { UsersAcc } from '../users-acc/entitys/users.acc.entity';
-import { VariableSettingsAcc } from '../variable_settings-acc/entitys/variable_settings.acc.entity';
 
 @Injectable()
 export class AccessibilityService {

@@ -6,44 +6,66 @@ import { loginMessages } from './constants';
 import { JwtService } from '@nestjs/jwt';
 import errorMessages from 'src/shared/constants/errorMessages';
 import validation from 'src/authentication/validation/auth.validation';
+import { error_response } from 'src/shared/response/response';
+import { AuthCodeService } from 'src/auth_code/auth_code.service';
+import { UsersService } from 'src/users/users.service';
+import { RoleService } from 'src/role/role.service';
+import { Role } from 'src/role/entitys/role.entity';
+import { User } from 'src/users/entitys/users.entity';
 
 @Controller('authentication')
 export class AuthenticationController {
     constructor(
         private readonly authService: AuthenticationService,
-        private readonly jwtService: JwtService
+        private readonly jwtService: JwtService,
+        private readonly userService: UsersService,
+        private readonly roleService: RoleService,
+        private readonly authCodeService: AuthCodeService
     ) { }
+
+    @Post('/register')
+    async addUser(@Req() req: any, @Body() body: CreateUserDto, @Res() res: Response) {
+        try {
+            // validation.userData(body)
+
+            const role: Role = await this.roleService.findOneById(body.role)
+            if (!role) throw new Error('این نقش انتخاب شده وجود ندارد')
+
+            const createdUser: User = await this.userService.save(body)
+            res.status(HttpStatus.CREATED).send(createdUser);
+
+        } catch (e) {
+            error_response(e, res)
+        }
+    }
 
     @Post("/login")
     async loginUser(@Req() req: any, @Body() body: LoginUserDto, @Res() res: Response) {
         try {
             validation.login(body)
-            res.status(HttpStatus.ACCEPTED).send(await this.authService.login(body.username, body.password))
+            res.status(HttpStatus.ACCEPTED).send(await this.authCodeService.genAuthCode(body.phone))
+            // res.status(HttpStatus.ACCEPTED).send(await this.authService.getUserToken(body.phone))
         } catch (e) {
-            console.error(e)
-            if (e.message === loginMessages.usernameOrPassword)
-                res.status(HttpStatus.METHOD_NOT_ALLOWED).send(loginMessages.usernameOrPassword);
-            else if (e.message === loginMessages.active)
-                res.status(HttpStatus.METHOD_NOT_ALLOWED).send(loginMessages.active);
-            else if (e.isThrow)
-                return res.status(HttpStatus.METHOD_NOT_ALLOWED).send(errorMessages.CHECK_YOUR_DATA);
-            else
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(errorMessages.INTERNAL_SERVER);
+            error_response(e, res)
         }
     }
 
     @Post("/verify")
-    async verify_login(@Req() req: Request, @Res() res: Response) {
+    async verify_login(@Body() body: any, @Req() req: Request, @Res() res: Response) {
         try {
-            if (!req.headers.authorization) return res.send("you must be logged in")
-            let token = req.headers.authorization?.split(' ')[1]
+            validation.verify(body)
+            // if (!req.headers.authorization) return res.send("you must be logged in")
+            // let token = req.headers.authorization?.split(' ')[1]
 
-            const decoded = this.jwtService.verify(token, { secret: process.env.JWT_AUTH_SECRET })
+            // const decoded = this.jwtService.verify(token, { secret: process.env.JWT_AUTH_SECRET })
+            await this.authCodeService.verifyAuthCode(body.phone, body.code)
 
-            res.status(HttpStatus.ACCEPTED).send(decoded)
-        } catch (error) {
-            if (error.message === "jwt expired") res.status(HttpStatus.UNAUTHORIZED).send(errorMessages.LOGIN_AGAIN)
-            else res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(errorMessages.INTERNAL_SERVER)
+
+            res.status(HttpStatus.ACCEPTED).send(
+                await this.authService.getUserToken(body.phone)
+            )
+        } catch (e) {
+            error_response(e, res)
         }
     }
 
