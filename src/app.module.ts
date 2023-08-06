@@ -13,6 +13,8 @@ import { AuthCodeModule } from './auth_code/auth_code.module';
 import { FileManagerModule } from './file_manager/file_manager.module';
 import { FilesModule } from './files/files.module';
 import { LogsModule } from './logs/logs.module';
+import { PageModule } from './page/page.module';
+import { PackageModule } from './package/package.module';
 
 @Module({
   imports: [
@@ -47,6 +49,8 @@ import { LogsModule } from './logs/logs.module';
     // FinancialCreditSourcesModule,
     // SettingsModule,
     LogsModule,
+    PageModule,
+    PackageModule,
     // ProjectsAccModule,
     // ReportsAccModule,
     // LogsAccModule,

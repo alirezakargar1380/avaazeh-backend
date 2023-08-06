@@ -34,6 +34,17 @@ export class User {
     @Column()
     month: number;
 
+    @Column({
+        default: null,
+        nullable: true
+    })
+    telegram_chatId: string;
+
+    @Column({
+        default: 0
+    })
+    budget: number;
+
     @Column()
     year: number;
 
