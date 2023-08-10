@@ -27,7 +27,8 @@ export class RoleController {
     async addRole(@Req() req: any, @Body() body: CreateRoleDto, @Res() res: Response) {
         try {
             const createdRole: Role | any = await this.roleService.save({
-                title: body.title
+                title: body.title,
+                isAdmin: body.isAdmin
             })
             res.status(HttpStatus.CREATED).send(createdRole);
 
@@ -50,7 +51,10 @@ export class RoleController {
         try {
             const role: Role = await this.roleService.findOneById(Number(param.id))
 
-            await this.roleService.update(role.id, { title: body.title })
+            await this.roleService.update(role.id, {
+                title: body.title,
+                isAdmin: body.isAdmin
+            })
 
             res.status(HttpStatus.CREATED).send(succssMessages.UPDATE_AN_RECORD);
         } catch (e) {

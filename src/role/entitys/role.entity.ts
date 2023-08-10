@@ -11,6 +11,11 @@ export class Role {
     })
     title: string;
 
+    @Column({
+        default: false
+    })
+    isAdmin: boolean;
+
     @CreateDateColumn()
     createdAt: Date
 

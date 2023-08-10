@@ -30,7 +30,12 @@ export class RoleService {
     }
 
     find(): Promise<Role[]> {
-        return this.roleRepository.find()
+        return this.roleRepository.find({
+            select: {
+                id: true,
+                title: true
+            }
+        })
     }
 
     count(): Promise<number> {
