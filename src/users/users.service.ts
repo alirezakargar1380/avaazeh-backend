@@ -31,6 +31,7 @@ export class UsersService {
   save(data: CreateUserDto | any): Promise<User> {
     return this.usersRepository.save({
       ...data,
+      active: null,
       year: p_date.year,
       month: p_date.month
     })
@@ -98,9 +99,9 @@ export class UsersService {
     return this.usersRepository.update({ id: id }, data)
   }
 
-  findOne(id: number): Promise<User> {
+  findOne(condition: any): Promise<User> {
     return this.usersRepository.findOne({
-      where: { id: id },
+      where: condition,
       relations: {
         role: true
       },

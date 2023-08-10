@@ -16,7 +16,8 @@ export class User {
     fullName: string;
 
     @Column({
-        default: true
+        nullable: true,
+        default: null
     })
     active: boolean;
 

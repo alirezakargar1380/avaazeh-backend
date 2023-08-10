@@ -56,7 +56,8 @@ export class AuthenticationController {
             validation.verify(body)
             // if (!req.headers.authorization) return res.send("you must be logged in")
             // let token = req.headers.authorization?.split(' ')[1]
-
+            const user = await this.userService.findOne({ phone: body.phone })
+            if (user.active === null) await this.userService.update(user.id, { active: true })
             // const decoded = this.jwtService.verify(token, { secret: process.env.JWT_AUTH_SECRET })
             await this.authCodeService.verifyAuthCode(body.phone, body.code)
 
