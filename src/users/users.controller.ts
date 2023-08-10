@@ -115,12 +115,7 @@ export class UsersController {
     @Get("/:perPage/:page")
     async getUsers(@Param() param: any, @Query() query: any, @Res() res: Response) {
         try {
-            const usersAcc: UsersAcc = await this.usersAccService.get(res.locals.decoded.roleId)
-            if (!usersAcc.get)
-                return res.status(HttpStatus.NOT_ACCEPTABLE).send(errorMessages.CANT_ACCESS_HERE)
-
-            const all_organ_access: Accessbility = await this.accessibilityService.findOneAccessiblityByRoleId(res.locals.decoded.roleId)
-            const count: number = await this.userService.count(query, usersAcc, all_organ_access.all_organ_access, res.locals.decoded.organization)
+            const count: number = await this.userService.count(query)
 
             let pagination: IPaginationHelper = new paginationHelper({
                 numberOfDataPerPage: Number(param.perPage),
@@ -131,7 +126,7 @@ export class UsersController {
             res.status(HttpStatus.ACCEPTED).send({
                 count: count,
                 pages: pagination.getDetailsOfTheNumberOfPages(count),
-                data: await this.userService.findAll(Number(param.perPage), Number(param.page), query, usersAcc, all_organ_access.all_organ_access, res.locals.decoded.organization)
+                data: await this.userService.findAll(Number(param.perPage), Number(param.page), query)
             })
 
         } catch (e) {

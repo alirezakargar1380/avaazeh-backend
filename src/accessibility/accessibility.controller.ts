@@ -45,8 +45,8 @@ export class AccessibilityController {
     async updateAccessiblity(@Req() req: Request, @Param() param: any, @Body() body: any, @Res() res: Response) {
         try {
             const accessiblity: any = await this.accessibilityService.findOneAccessiblity(Number(param.accessiblity_id))
-            await this.roleService.update(accessiblity.role.id, { title: body.title })
-            delete body.title
+            // await this.roleService.update(accessiblity.role.id, { title: body.title })
+            // delete body.title
             // console.log(body.accessibility)
             // return
             await this.accessibilityService.updateAccessiblity(Number(param.accessiblity_id), body.accessibility)

@@ -50,23 +50,14 @@ export class UsersService {
     // })
   }
 
-  findAll(perPage: number, page: number, query: any, usersAcc: UsersAcc, all_organ_access: boolean, organ_id: number): Promise<User[]> {
+  findAll(perPage: number, page: number, query: any): Promise<User[]> {
     let pagination = new paginationHelper({
       numberOfDataPerPage: perPage,
       current_page_number: page
     })
-
-    let organization: any = {}
+    
     let role: any = {}
-    if (usersAcc.get) {
-      organization = { id: Number(organ_id) }
-      if (query.role) role = { id: Number(query.role) }
-    }
-    if (all_organ_access) {
-      organization = {}
-      if (query.organization) organization = { id: Number(query.organization) }
-      if (query.role) role = { id: Number(query.role) }
-    }
+    if (query.role) role = { id: Number(query.role) }
 
     return this.usersRepository.find({
       relations: {
@@ -89,18 +80,9 @@ export class UsersService {
     });
   }
 
-  count(query: any, usersAcc: UsersAcc, all_organ_access: boolean, organ_id: number) {
-    let organization: any = {}
+  count(query: any) {
     let role: any = {}
-    if (usersAcc.get) {
-      organization = { id: Number(organ_id) }
-      if (query.role) role = { id: Number(query.role) }
-    }
-    if (all_organ_access) {
-      organization = {}
-      if (query.organization) organization = { id: Number(query.organization) }
-      if (query.role) role = { id: Number(query.role) }
-    }
+    if (query.role) role = { id: Number(query.role) }
 
     return this.usersRepository.count({
       relations: {
