@@ -11,6 +11,7 @@ import { UsersAccService } from "src/users-acc/users-acc.service";
 import succssMessages from "src/shared/constants/succssMessages";
 import paginationHelper from "pagination-helper";
 import { LogsService } from "src/logs/logs.service";
+import { error_response } from "src/shared/response/response";
 
 @Controller('role')
 export class RoleController {
@@ -28,23 +29,19 @@ export class RoleController {
             const createdRole: Role | any = await this.roleService.save({
                 title: body.title
             })
-
-            delete createdRole.decoded
             res.status(HttpStatus.CREATED).send(createdRole);
 
-            const userInfo = res.locals.decoded
-            this.logsService.addLog({
-                action: logsActions.ADD_ROLE,
-                title: body.title,
-                role: userInfo.roleId,
-                user: userInfo.id,
-                ip: ""
-            })
+            // const userInfo = res.locals.decoded
+            // this.logsService.addLog({
+            //     action: logsActions.ADD_ROLE,
+            //     title: body.title,
+            //     role: userInfo.roleId,
+            //     user: userInfo.id,
+            //     ip: ""
+            // })
 
         } catch (e) {
-            console.log(e)
-            if (e.code === 'ER_DUP_ENTRY') res.status(HttpStatus.METHOD_NOT_ALLOWED).send(errorMessages.DUBLICATE_DATA);
-            else res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(errorMessages.INTERNAL_SERVER)
+            error_response(e, res)
         }
     }
 
