@@ -61,9 +61,12 @@ export class AuthenticationService {
 
         const payload: JWT_TOKEN = { id: user.id, roleId: user.role?.id }
         return {
+            id: user.id,
             access_token: this.jwtService.sign(payload),
             role: user.role.title,
-            fullName: user.fullName
+            fullName: user.fullName,
+            telegram_chatId: user.telegram_chatId,
+            budget: user.budget
         }
     }
 }
