@@ -14,7 +14,10 @@ export class Logs {
     @Column()
     title: string;
 
-    @Column()
+    @Column({
+        nullable: true,
+        default: null
+    })
     ip: string;
 
     @ManyToOne(() => User, {
