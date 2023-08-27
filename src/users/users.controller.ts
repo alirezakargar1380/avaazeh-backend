@@ -8,8 +8,6 @@ import { Role } from "src/role/entitys/role.entity";
 import errorMessages from "src/shared/constants/errorMessages";
 import { LogsService } from "src/logs/logs.service";
 import logsActions from "src/shared/constants/logsActions";
-import { UsersAcc } from "src/users-acc/entitys/users.acc.entity";
-import { UsersAccService } from "src/users-acc/users-acc.service";
 import { AccessibilityService } from "src/accessibility/accessibility.service";
 import { Accessbility } from "src/accessibility/entitys/accessibility.entity";
 import validation from "src/users/validation/users.validation"
@@ -23,7 +21,6 @@ export class UsersController {
         private readonly userService: UsersService,
         private readonly roleService: RoleService,
         private readonly logsService: LogsService,
-        private readonly usersAccService: UsersAccService,
         private readonly accessibilityService: AccessibilityService
     ) { }
 
@@ -54,10 +51,6 @@ export class UsersController {
     @Post()
     async addUser(@Req() req: any, @Body() body: CreateUserDto, @Res() res: Response) {
         try {
-            const usersAcc: UsersAcc = await this.usersAccService.get(res.locals.decoded.roleId)
-            if (!usersAcc.add)
-                return res.status(HttpStatus.NOT_ACCEPTABLE).send(errorMessages.CANT_ACCESS_HERE)
-
             validation.userData(body)
 
             const role: Role = await this.roleService.findOneById(body.role)

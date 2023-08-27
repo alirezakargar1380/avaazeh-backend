@@ -11,12 +11,10 @@ import { LogsService } from "src/logs/logs.service";
 import { userLoginChecker } from 'src/shared/middlewares/userLoginChecker.middleware';
 import { AccessibilityService } from 'src/accessibility/accessibility.service';
 import { Accessbility } from 'src/accessibility/entitys/accessibility.entity';
-import { UsersAcc } from 'src/users-acc/entitys/users.acc.entity';
-import { UsersAccService } from 'src/users-acc/users-acc.service';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([User, Role, Logs, Accessbility, UsersAcc]),
+        TypeOrmModule.forFeature([User, Role, Logs, Accessbility]),
         JwtModule.register({
             secret: process.env.JWT_AUTH_SECRET,
             signOptions: { expiresIn: process.env.JWT_AUTH_TIME },
@@ -26,8 +24,7 @@ import { UsersAccService } from 'src/users-acc/users-acc.service';
         UsersService,
         RoleService,
         LogsService,
-        AccessibilityService,
-        UsersAccService
+        AccessibilityService
     ],
     controllers: [UsersController]
 })

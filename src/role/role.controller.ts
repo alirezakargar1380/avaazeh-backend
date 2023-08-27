@@ -7,7 +7,6 @@ import { Role } from "./entitys/role.entity";
 import { RoleService } from './role.service';
 import logsActions from "src/shared/constants/logsActions";
 import { SettingsAccService } from "src/settings-acc/settings-acc.service";
-import { UsersAccService } from "src/users-acc/users-acc.service";
 import succssMessages from "src/shared/constants/succssMessages";
 import paginationHelper from "pagination-helper";
 import { LogsService } from "src/logs/logs.service";
@@ -19,7 +18,6 @@ export class RoleController {
         private readonly roleService: RoleService,
         private readonly accessibiltyService: AccessibilityService,
         private readonly settingsAccService: SettingsAccService,
-        private readonly usersAccServiceService: UsersAccService,
         private readonly logsService: LogsService,
     ) { }
 

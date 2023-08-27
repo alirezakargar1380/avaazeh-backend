@@ -4,9 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto, UsersChart } from './dto/users.dto';
 import { User } from './entitys/users.entity';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
 import paginationHelper from "pagination-helper";
-import { UsersAcc } from 'src/users-acc/entitys/users.acc.entity';
 import p_date from './../shared/utils/persionDate.utility';
 import persionDateUtility from './../shared/utils/persionDate.utility';
 

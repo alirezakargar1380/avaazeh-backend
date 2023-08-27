@@ -8,13 +8,13 @@ import { RoleModule } from './role/role.module';
 import { AccessibilityModule } from './accessibility/accessibility.module';
 import { Accessbility } from './accessibility/entitys/accessibility.entity';
 import { SettingsAccModule } from './settings-acc/settings-acc.module';
-import { UsersAccModule } from './users-acc/users-acc.module';
 import { AuthCodeModule } from './auth_code/auth_code.module';
 import { FileManagerModule } from './file_manager/file_manager.module';
 import { FilesModule } from './files/files.module';
 import { LogsModule } from './logs/logs.module';
 import { PageModule } from './page/page.module';
 import { PackageModule } from './package/package.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -51,6 +51,7 @@ import { PackageModule } from './package/package.module';
     LogsModule,
     PageModule,
     PackageModule,
+    OrdersModule,
     // ProjectsAccModule,
     // ReportsAccModule,
     // LogsAccModule,

@@ -5,7 +5,6 @@ import { diskStorage } from 'multer'
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { extname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
-import { file_type } from './entitys/files.entity';
 import { FileManagerService } from 'src/file_manager/file_manager.service';
 const sharp = require('sharp');
 
@@ -69,20 +68,21 @@ export class FilesController {
                     if (err) throw err;
                 })
 
-                insertMulti.push({ name: file.filename, type: file_type.PICTURE })
+                insertMulti.push({ name: file.filename })
             }
-            const multiFileManagers = []
+            
             const createdFiles: any = await this.filesService.insertMulti(insertMulti)
-            for (let i = 0; i < createdFiles.identifiers.length; i++) {
-                const element: { id: number } = createdFiles.identifiers[i]
-                multiFileManagers.push({
-                    file: element.id,
-                    belongsTo: 1
-                })
-            }
+            const multiFileManagers = []
+            // for (let i = 0; i < createdFiles.identifiers.length; i++) {
+            //     const element: { id: number } = createdFiles.identifiers[i]
+            //     multiFileManagers.push({
+            //         file: element.id,
+            //         belongsTo: 1
+            //     })
+            // }
 
 
-            res.status(HttpStatus.CREATED).send(await this.fileManagerService.insertMulti(multiFileManagers))
+            res.status(HttpStatus.CREATED).send(createdFiles)
         } catch (e) {
             console.error(e)
         }
