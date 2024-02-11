@@ -38,11 +38,11 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "sharp": "^0.31.2",
+    "sharp": "^0.33.2",
     "typeorm": "^0.3.10",
     "uuid": "^9.0.0",
     "validate": "^5.2.0",
-    "zarinpal-checkout": "^0.2.7"
+    "zarinpal-checkout": "^0.1.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.2.1",
