@@ -17,5 +17,5 @@ export const error_response = (e: any, res: Response) => {
     else if (e.isThrow)
         return res.status(HttpStatus.METHOD_NOT_ALLOWED).send(errorMessages.CHECK_YOUR_DATA);
     else
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(errorMessages.INTERNAL_SERVER);
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(e);
 }

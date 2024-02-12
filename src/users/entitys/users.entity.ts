@@ -12,7 +12,9 @@ export class User {
     })
     email: string;
 
-    @Column()
+    @Column({
+        default: ''
+    })
     fullName: string;
 
     @Column({
