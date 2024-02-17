@@ -14,11 +14,6 @@ import { LogsService } from 'src/logs/logs.service';
 // import { ReportsAcc } from 'src/reports-acc/entitys/reports.acc.entity';
 // import { LogsAcc } from 'src/logs-acc/entitys/logs.acc.entity';
 // import { VariableSettingsAcc } from 'src/variable_settings-acc/entitys/variable_settings.acc.entity';
-import { SettingsAcc } from 'src/settings-acc/entitys/settings.acc.entity';
-// import { RoleAccService } from 'src/role-acc/role-acc.service';
-// import { ReportsAccService } from 'src/reports-acc/reports-acc.service';
-// import { RolesAcc } from 'src/role-acc/entitys/roles.acc.entity';
-import { SettingsAccService } from 'src/settings-acc/settings-acc.service';
 // import { VariableSettingsAccService } from 'src/variable_settings-acc/variable_settings-acc.service';
 // import { LogsAccService } from 'src/logs-acc/logs-acc.service';
 import { userLoginChecker } from 'src/shared/middlewares/userLoginChecker.middleware';
@@ -27,13 +22,7 @@ import { userLoginChecker } from 'src/shared/middlewares/userLoginChecker.middle
   imports: [
     TypeOrmModule.forFeature([
       Role, Accessbility, 
-      Logs,
-      // ProjectsAcc,
-      // ReportsAcc,
-      // LogsAcc,
-      // VariableSettingsAcc,
-      SettingsAcc,
-      // RolesAcc
+      Logs
     ]),
     JwtModule.register({
       secret: process.env.JWT_AUTH_SECRET,
@@ -42,14 +31,9 @@ import { userLoginChecker } from 'src/shared/middlewares/userLoginChecker.middle
   ],
   controllers: [RoleController],
   providers: [
-    RoleService, AccessibilityService, 
-    LogsService,
-    // ProjectsAccService,
-    // RoleAccService,
-    // ReportsAccService,
-    SettingsAccService,
-    // VariableSettingsAccService,
-    // LogsAccService
+    RoleService, 
+    AccessibilityService, 
+    LogsService
   ]
 })
 

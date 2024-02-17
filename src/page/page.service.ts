@@ -15,7 +15,7 @@ export class PageService {
                 user: { id: user.id }
             },
             relations: {
-                belongsTo: true,
+                // belongsTo: true,
                 package: true,
                 user: true
             }

@@ -5,9 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { RoleModule } from './role/role.module';
-import { AccessibilityModule } from './accessibility/accessibility.module';
-import { Accessbility } from './accessibility/entitys/accessibility.entity';
-import { SettingsAccModule } from './settings-acc/settings-acc.module';
 import { AuthCodeModule } from './auth_code/auth_code.module';
 import { FileManagerModule } from './file_manager/file_manager.module';
 import { FilesModule } from './files/files.module';
@@ -35,30 +32,10 @@ import { OrdersModule } from './orders/orders.module';
     RoleModule,
     FileManagerModule, 
     FilesModule,
-    // OrganizationModule,
-    // ProjectModule,
-    // ReportModule,
-    // FinancialCreditModule,
-    // ProjectStatusModule,
-    // ProjectTypeModule,
-    // ContractRateBasicsModule,
-    // ReportStatusModule,
-    // UploaderModule,
-    // CityModule,
-    // AccessibilityModule,
-    // FinancialCreditSourcesModule,
-    // SettingsModule,
     LogsModule,
     PageModule,
     PackageModule,
     OrdersModule,
-    // ProjectsAccModule,
-    // ReportsAccModule,
-    // LogsAccModule,
-    // RoleAccModule,
-    // SettingsAccModule,
-    // VariableSettingsAccModule,
-    // UsersAccModule
   ],
   controllers: [
     AppController

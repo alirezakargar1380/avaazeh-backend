@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Accessbility } from './entitys/accessibility.entity';
-import { SettingsAcc } from '../settings-acc/entitys/settings.acc.entity';
 
 @Injectable()
 export class AccessibilityService {

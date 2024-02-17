@@ -7,7 +7,7 @@ import zarinPalCheckout, { PaymentRequestInput, PaymentVerificationInput, create
 export class OrdersService {
     public api: any;
     constructor(
-        @InjectRepository(Orders) private packageRepository: Repository<Orders>
+        @InjectRepository(Orders) private ordersRepository: Repository<Orders>
     ) {
         this.api = {
             key: (process.env.ZARINPAL_TEST === "0") ? process.env.ZARINPAL_GATEWAY_CODE : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -16,7 +16,7 @@ export class OrdersService {
     }
 
     save(data) {
-        return this.packageRepository.save(data)
+        return this.ordersRepository.save(data)
     }
 
     async payZarinPal(amount_toman: number, callbackUrl: string) {

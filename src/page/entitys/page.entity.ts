@@ -14,11 +14,11 @@ export class Page {
     @JoinColumn()
     user: User;
 
-    @ManyToOne(() => User, user => user.id, {
-        onDelete: 'SET NULL'
-    })
-    @JoinColumn()
-    belongsTo: User;
+    // @ManyToOne(() => User, user => user.id, {
+    //     onDelete: 'SET NULL'
+    // })
+    // @JoinColumn()
+    // belongsTo: User;
 
     @ManyToOne(() => Package, pac => pac.id, {
         onDelete: 'SET NULL'
@@ -28,6 +28,9 @@ export class Page {
 
     @Column({ type: 'integer' })
     followersCount: number;
+
+    @Column({ default: null, nullable: true })
+    username: string;
 
     @Column()
     engagementRate: string;

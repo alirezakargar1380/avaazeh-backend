@@ -1,24 +1,17 @@
 import { Body, Controller, Get, Post, Res, HttpStatus, Put, Param, Req } from "@nestjs/common";
 import { Response } from 'express';
-import { AccessibilityService } from "src/accessibility/accessibility.service";
 import errorMessages from "src/shared/constants/errorMessages";
 import { CreateRoleDto } from "./dto/role.dto";
 import { Role } from "./entitys/role.entity";
 import { RoleService } from './role.service';
-import logsActions from "src/shared/constants/logsActions";
-import { SettingsAccService } from "src/settings-acc/settings-acc.service";
 import succssMessages from "src/shared/constants/succssMessages";
 import paginationHelper from "pagination-helper";
-import { LogsService } from "src/logs/logs.service";
 import { error_response } from "src/shared/response/response";
 
 @Controller('role')
 export class RoleController {
     constructor(
-        private readonly roleService: RoleService,
-        private readonly accessibiltyService: AccessibilityService,
-        private readonly settingsAccService: SettingsAccService,
-        private readonly logsService: LogsService,
+        private readonly roleService: RoleService
     ) { }
 
     @Post()

@@ -29,7 +29,7 @@ export class AuthenticationController {
             // validation.userData(body)
 
             const role: Role = await this.roleService.findOneById(body.role)
-            if (!role) throw new Error('این نقش انتخاب شده وجود ندارد')
+            if (!role) res.status(HttpStatus.NOT_FOUND).send('این نقش انتخاب شده وجود ندارد');
 
             const createdUser: User = await this.userService.save(body)
             res.status(HttpStatus.CREATED).send(createdUser);
