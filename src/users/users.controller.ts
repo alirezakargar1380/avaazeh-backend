@@ -24,30 +24,6 @@ export class UsersController {
         private readonly accessibilityService: AccessibilityService
     ) { }
 
-    // @Get('/chart')
-    // async GetChart(@Req() req: any, @Res() res: Response) {
-    //     try {
-    //         let lables: string[] = []
-    //         let dataset: number[] = []
-    //         const data: UsersChart[] = await this.userService.get_sum() 
-
-    //         data.map((item: UsersChart) => {
-    //             lables.push(PMonth[item.user_month])
-    //             dataset.push(Number(item.numberOfReports))
-    //         })
-            
-    //         res.send({
-    //             lables: lables,
-    //             dataset: dataset,
-    //             data: data
-    //         })
-    //     } catch (e) {
-    //         console.error(e)
-    //         if (e.isThrow) return res.status(HttpStatus.METHOD_NOT_ALLOWED).send(errorMessages.CHECK_YOUR_DATA);
-    //         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(errorMessages.INTERNAL_SERVER);
-    //     }
-    // }
-
     @Post()
     async addUser(@Req() req: any, @Body() body: CreateUserDto, @Res() res: Response) {
         try {
@@ -138,7 +114,7 @@ export class UsersController {
             //     return res.status(HttpStatus.NOT_ACCEPTABLE).send(errorMessages.CANT_ACCESS_HERE)
 
             // const all_organ_access: Accessbility = await this.accessibilityService.findOneAccessiblityByRoleId(res.locals.decoded.roleId)
-            res.status(HttpStatus.ACCEPTED).send(await this.userService.findOne(userId))
+            res.status(HttpStatus.ACCEPTED).send(await this.userService.findOne({ id: userId }))
 
         } catch (e) {
             console.error(e)
