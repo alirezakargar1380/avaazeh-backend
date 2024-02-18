@@ -5,11 +5,13 @@ import { MiddlewareConsumer } from '@nestjs/common/interfaces/middleware';
 import { userLoginChecker } from 'src/shared/middlewares/userLoginChecker.middleware';
 import { AuthCode } from './entitys/auth_code.entity';
 import { AuthCodeService } from './auth_code.service';
+import { User } from 'src/users/entitys/users.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      AuthCode
+      AuthCode,
+      User
     ]),
     JwtModule.register({
       secret: process.env.JWT_AUTH_SECRET,
