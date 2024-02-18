@@ -102,16 +102,6 @@ export class UsersService {
       where: condition,
       relations: {
         role: true
-      },
-      select: {
-        active: true,
-        email: true,
-        fullName: true,
-        id: true,
-        phone: true,
-        role: {
-          id: true
-        }
       }
     });
   }
