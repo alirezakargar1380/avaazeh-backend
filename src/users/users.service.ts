@@ -29,7 +29,7 @@ export class UsersService {
   save(data: CreateUserDto | any): Promise<User> {
     return this.usersRepository.save({
       ...data,
-      active: null,
+      active: true,
       year: p_date.year,
       month: p_date.month
     })
