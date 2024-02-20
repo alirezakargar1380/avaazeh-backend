@@ -24,7 +24,7 @@ export class Page {
         onDelete: 'SET NULL'
     })
     @JoinColumn()
-    package: Package;
+    package: Package; // every page has their package and amount
 
     @Column({ type: 'integer' })
     followersCount: number;

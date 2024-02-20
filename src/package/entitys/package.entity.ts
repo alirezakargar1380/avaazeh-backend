@@ -1,10 +1,18 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { User } from 'src/users/entitys/users.entity';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { EPackageAction } from '../interface/package-action';
 
 @Entity()
 export class Package {
 
     @PrimaryGeneratedColumn()
     id: number;
+
+    @ManyToOne(() => User, user => user.id, {
+        onDelete: 'SET NULL'
+    })
+    @JoinColumn()
+    user: User;
 
     @Column({
         default: 0,
@@ -13,13 +21,11 @@ export class Package {
     price: number;
 
     @Column({
-        default: 0,
-        type: 'integer'
+        type: 'enum',
+        enum: EPackageAction,
+        // default: EPaymentStatus.pending
     })
-    type: number;
-
-    @Column()
-    action: string;
+    action: EPackageAction;
 
     @CreateDateColumn()
     createdAt: Date

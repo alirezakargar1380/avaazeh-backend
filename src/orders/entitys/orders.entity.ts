@@ -2,12 +2,20 @@ import { Files } from 'src/files/entitys/files.entity';
 import { Package } from 'src/package/entitys/package.entity';
 import { Page } from 'src/page/entitys/page.entity';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, JoinColumn, ManyToOne } from 'typeorm';
+import { EOrderStatus } from '../interface/order-status';
+import { User } from 'src/users/entitys/users.entity';
 
 @Entity()
 export class Orders {
 
     @PrimaryGeneratedColumn()
     id: number;
+
+    @ManyToOne(() => User, user => user.id, {
+        onDelete: 'SET NULL'
+    })
+    @JoinColumn()
+    user: User;
 
     @Column({ type: 'date' })
     startDate: Date;
@@ -37,21 +45,16 @@ export class Orders {
         onDelete: 'SET NULL'
     })
     @JoinColumn()
-    advertiserPage: Page;
+    advertiserPage: Page; // the page that should advertise
 
     @Column({
-        default: 0,
-        type: 'integer'
-    })
-    price: number;
-
-    @Column({
-        default: 0,
-        type: 'integer'
+        default: EOrderStatus.WATING_FOR_PAYMENT
     })
     status: number;
 
-    @Column()
+    @Column({
+        default: ''
+    })
     adUID: string;
 
     @Column({
@@ -60,7 +63,8 @@ export class Orders {
     createdByAdReciver: boolean;
 
     @Column({
-        length: 500
+        length: 500,
+        default: ''
     })
     caption: string;
 
