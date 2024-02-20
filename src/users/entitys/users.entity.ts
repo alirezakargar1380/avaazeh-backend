@@ -43,11 +43,6 @@ export class User {
     })
     telegram_chatId: string;
 
-    @Column({
-        default: 0
-    })
-    budget: number;
-
     @Column()
     year: number;
 
