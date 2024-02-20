@@ -2,8 +2,6 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
 import { User } from './../users/entitys/users.entity';
-import { JwtService } from '@nestjs/jwt';
-import { LogsService } from 'src/logs/logs.service';
 import { AuthCode } from './entitys/auth_code.entity';
 
 @Injectable()
