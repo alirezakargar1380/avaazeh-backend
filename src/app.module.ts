@@ -8,10 +8,12 @@ import { RoleModule } from './role/role.module';
 import { AuthCodeModule } from './auth_code/auth_code.module';
 import { FileManagerModule } from './file_manager/file_manager.module';
 import { FilesModule } from './files/files.module';
-import { LogsModule } from './logs/logs.module';
 import { PageModule } from './page/page.module';
 import { PackageModule } from './package/package.module';
 import { OrdersModule } from './orders/orders.module';
+import { WalletModule } from './wallet/wallet.module';
+import { GatewayModule } from './gateway/gateway.module';
+import { WalletLogsModule } from './wallet_logs/wallet_logs.module';
 
 @Module({
   imports: [
@@ -32,10 +34,12 @@ import { OrdersModule } from './orders/orders.module';
     RoleModule,
     FileManagerModule, 
     FilesModule,
-    LogsModule,
     PageModule,
     PackageModule,
     OrdersModule,
+    WalletModule,
+    GatewayModule,
+    WalletLogsModule,
   ],
   controllers: [
     AppController
