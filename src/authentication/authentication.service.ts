@@ -4,18 +4,14 @@ import { Repository } from 'typeorm';
 import { User } from './../users/entitys/users.entity';
 import { JwtService } from '@nestjs/jwt';
 import { loginMessages } from './constants';
-import * as bcrypt from 'bcrypt';
 import { JWT_TOKEN } from './interface/jwt.interface';
-import { LogsService } from 'src/logs/logs.service';
 import logsActions from 'src/shared/constants/logsActions';
 
 @Injectable()
 export class AuthenticationService {
     constructor(
-        @InjectRepository(User)
-        private usersRepository: Repository<User>,
-        private jwtService: JwtService,
-        private logsService: LogsService,
+        @InjectRepository(User) private usersRepository: Repository<User>,
+        private jwtService: JwtService
     ) { }
 
     async getUserToken(phone: string) {
@@ -52,21 +48,13 @@ export class AuthenticationService {
         //     throw new Error(loginMessages.usernameOrPassword)
         // }
 
-        await this.logsService.addLog({
-            action: logsActions.LOGIN_SCCUSS,
-            title: '',
-            role: user.role,
-            user: user
-        })
-
         const payload: JWT_TOKEN = { id: user.id, roleId: user.role?.id }
         return {
             id: user.id,
             access_token: this.jwtService.sign(payload),
             role: user.role.title,
             fullName: user.fullName,
-            telegram_chatId: user.telegram_chatId,
-            budget: user.budget
+            telegram_chatId: user.telegram_chatId
         }
     }
 }

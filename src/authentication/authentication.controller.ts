@@ -12,15 +12,16 @@ import { UsersService } from 'src/users/users.service';
 import { RoleService } from 'src/role/role.service';
 import { Role } from 'src/role/entitys/role.entity';
 import { User } from 'src/users/entitys/users.entity';
+import { WalletService } from 'src/wallet/wallet.service';
 
 @Controller('authentication')
 export class AuthenticationController {
     constructor(
         private readonly authService: AuthenticationService,
-        private readonly jwtService: JwtService,
         private readonly userService: UsersService,
         private readonly roleService: RoleService,
-        private readonly authCodeService: AuthCodeService
+        private readonly authCodeService: AuthCodeService,
+        private walletService: WalletService,
     ) { }
 
     @Post('/register')
@@ -32,6 +33,9 @@ export class AuthenticationController {
             if (!role) res.status(HttpStatus.NOT_FOUND).send('این نقش انتخاب شده وجود ندارد');
 
             const createdUser: User = await this.userService.save(body)
+            
+            await this.walletService.create(createdUser.id); // create wallet for user
+
             res.status(HttpStatus.CREATED).send(createdUser);
 
         } catch (e) {
