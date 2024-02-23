@@ -48,7 +48,14 @@ export class AuthenticationService {
         //     throw new Error(loginMessages.usernameOrPassword)
         // }
 
-        const payload: JWT_TOKEN = { id: user.id, roleId: user.role?.id }
+        const payload: JWT_TOKEN = {
+            id: user.id, roleId: user.role?.id,
+            role: {
+                title: user.role.title,
+                isAdmin: user.role.isAdmin
+            }
+        }
+        
         return {
             id: user.id,
             access_token: this.jwtService.sign(payload),

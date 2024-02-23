@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, HttpStatus, Req } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpStatus, Req, BadRequestException } from '@nestjs/common';
 import { CreateUserDto, LoginUserDto } from "./../users/dto/users.dto";
 import { AuthenticationService } from "./authentication.service";
 import { Response, Request } from 'express';
@@ -33,7 +33,7 @@ export class AuthenticationController {
             if (!role) res.status(HttpStatus.NOT_FOUND).send('این نقش انتخاب شده وجود ندارد');
 
             const createdUser: User = await this.userService.save(body)
-            
+
             await this.walletService.create(createdUser.id); // create wallet for user
 
             res.status(HttpStatus.CREATED).send(createdUser);
@@ -61,6 +61,7 @@ export class AuthenticationController {
             // if (!req.headers.authorization) return res.send("you must be logged in")
             // let token = req.headers.authorization?.split(' ')[1]
             const user = await this.userService.findOne({ phone: body.phone })
+            if (!user) throw new BadRequestException('کاربر مورد نظر یافت نشد')
             if (user.active === null) await this.userService.update(user.id, { active: true })
             // const decoded = this.jwtService.verify(token, { secret: process.env.JWT_AUTH_SECRET })
             await this.authCodeService.verifyAuthCode(body.phone, body.code)
