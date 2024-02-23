@@ -5,6 +5,7 @@ import { userLoginChecker } from 'src/shared/middlewares/userLoginChecker.middle
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Page } from './entitys/page.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { adminChecker } from 'src/shared/middlewares/adminChecker.middleware';
 
 @Module({
   imports: [
@@ -24,5 +25,6 @@ export class PageModule {
     consumer.apply(userLoginChecker).forRoutes({ path: 'page', method: RequestMethod.POST })
     consumer.apply(userLoginChecker).forRoutes({ path: 'page', method: RequestMethod.GET })
     consumer.apply(userLoginChecker).forRoutes({ path: 'page/:id/edit', method: RequestMethod.PUT })
+    consumer.apply(adminChecker).forRoutes({ path: 'page/:id', method: RequestMethod.GET })
   }
 }

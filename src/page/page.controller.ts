@@ -19,6 +19,16 @@ export class PageController {
         }
     }
 
+    @Get('/:id')
+    async getUserPagesByid(@Param('id') id: string, @Res() res: Response) {
+        try {
+            const result = await this.pageService.getPage({ id })
+            res.status(HttpStatus.CREATED).send(result);
+        } catch (e) {
+            error_response(e, res)
+        }
+    }
+
     @Post('/')
     async addPage(@Body() body: any, @Res() res: Response) {
         try {

@@ -3,7 +3,6 @@ import { RoleController } from './role.controller';
 import { RoleService } from './role.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Role } from './entitys/role.entity';
-import { adminChecker } from 'src/shared/middlewares/adminChecker.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { userLoginChecker } from 'src/shared/middlewares/userLoginChecker.middleware';
 
