@@ -97,6 +97,14 @@ export class UsersService {
     return this.usersRepository.update({ id: id }, data)
   }
 
+  getUserByTelegram(telegram_id: string) {
+    return this.usersRepository.findOne({
+      where: {
+        telegram_chatId: telegram_id
+      }
+    })
+  }
+
   findOne(condition: any): Promise<User> {
     return this.usersRepository.findOne({
       where: condition,
