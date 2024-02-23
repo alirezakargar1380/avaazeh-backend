@@ -16,7 +16,7 @@ export class PackageController {
              * TODO:
              *    - CHECK USER IS ADMIN OR NOT
              */
-            res.status(HttpStatus.ACCEPTED).send(await this.packageService.save(body))
+            res.status(HttpStatus.ACCEPTED).send(await this.packageService.save(res.locals.user, body))
         } catch (e) {
             error_response(e, res)
         }

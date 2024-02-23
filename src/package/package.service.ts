@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Package } from './entitys/package.entity';
 import { Repository } from 'typeorm';
+import { JWT_TOKEN } from 'src/authentication/interface/jwt.interface';
 
 @Injectable()
 export class PackageService {
@@ -9,8 +10,22 @@ export class PackageService {
         @InjectRepository(Package) private packageRepository: Repository<Package>
     ) { }
 
-    save(data: any) {
-        return this.packageRepository.save(data)
+    save(user: JWT_TOKEN, data: any) {
+        let saveData = {
+            ...data,
+        }
+
+        if (!user.role.isAdmin) {
+            saveData = {
+                ...data,
+                user: {
+                    id: user.id
+                }
+            }
+            console.log(saveData)
+        }
+
+        return this.packageRepository.save(saveData)
     }
 
     getAll() {
