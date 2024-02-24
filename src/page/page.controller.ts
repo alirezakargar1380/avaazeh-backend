@@ -19,7 +19,7 @@ export class PageController {
         }
     }
 
-    @Get('/:id')
+    @Get('/user/:id')
     async getUserPagesByid(@Param('id') id: string, @Res() res: Response) {
         try {
             const result = await this.pageService.getPage({ id })
