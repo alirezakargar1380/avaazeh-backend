@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Package } from './entitys/package.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { userLoginChecker } from 'src/shared/middlewares/userLoginChecker.middleware';
+import { adminChecker } from 'src/shared/middlewares/adminChecker.middleware';
 
 @Module({
   imports: [
@@ -22,5 +23,6 @@ import { userLoginChecker } from 'src/shared/middlewares/userLoginChecker.middle
 export class PackageModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(userLoginChecker).forRoutes({ path: 'package', method: RequestMethod.POST })
+    consumer.apply(adminChecker).forRoutes({ path: 'package/user/:id', method: RequestMethod.GET })
   }
 }

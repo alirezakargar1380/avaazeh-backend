@@ -32,6 +32,19 @@ export class PackageService {
         return this.packageRepository.find()
     }
 
+    getAllUserPackages(userId: number) {
+        return this.packageRepository.find({
+            where: {
+                user: {
+                    id: userId
+                }
+            },
+            relations: {
+                user: true
+            }
+        })
+    }
+
     update(id: number, data: any): Promise<any> {
         return this.packageRepository.update({
             id: id

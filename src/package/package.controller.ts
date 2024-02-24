@@ -33,6 +33,17 @@ export class PackageController {
         }
     }
 
+    @Get('/user/:id')
+    async getUserPackages(@Param('id') id: string, @Body() body, @Res() res: Response) {
+        try {
+            const packages = await this.packageService.getAllUserPackages(Number(id))
+
+            res.status(HttpStatus.ACCEPTED).send(packages)
+        } catch (e) {
+            error_response(e, res)
+        }
+    }
+
     @Put('/:id/edit')
     async updatePage(@Param('id') id: string, @Body() body: any, @Res() res: Response) {
         try {
