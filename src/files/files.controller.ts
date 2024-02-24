@@ -6,7 +6,6 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { extname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { FileManagerService } from 'src/file_manager/file_manager.service';
-const sharp = require('sharp');
 
 @Controller('files')
 export class FilesController {
@@ -55,18 +54,18 @@ export class FilesController {
 
                 // read resize from settings
                 console.log(file.filename)
-                sharp(`${file.destination}/${file.filename}`)
-                    .rotate()
-                    .resize(1080)
-                    .toBuffer()
-                    .then((data) => {
-                        writeFile(`${file.destination}/${file.filename}`, data, (err) => { if (err) throw err; })
-                    })
+                // sharp(`${file.destination}/${file.filename}`)
+                //     .rotate()
+                //     .resize(1080)
+                //     .toBuffer()
+                //     .then((data) => {
+                //         writeFile(`${file.destination}/${file.filename}`, data, (err) => { if (err) throw err; })
+                //     })
 
                 // make sure file is created
-                readFile(`${file.destination}/${file.filename}`, function (err, data) {
-                    if (err) throw err;
-                })
+                // readFile(`${file.destination}/${file.filename}`, function (err, data) {
+                //     if (err) throw err;
+                // })
 
                 insertMulti.push({ name: file.filename })
             }
