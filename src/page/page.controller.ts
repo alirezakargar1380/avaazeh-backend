@@ -39,6 +39,16 @@ export class PageController {
         }
     }
 
+    @Post('/user/:id')
+    async addPageForUser(@Param('id') id: string, @Body() body: any, @Res() res: Response) {
+        try {
+            const result = await this.pageService.addPage(body, { id: Number(id) })
+            res.status(HttpStatus.CREATED).send(result);
+        } catch (e) {
+            error_response(e, res)
+        }
+    }
+
     @Put('/:id/edit')
     async updatePage(@Param('id') id: string, @Body() body: any, @Res() res: Response) {
         try {

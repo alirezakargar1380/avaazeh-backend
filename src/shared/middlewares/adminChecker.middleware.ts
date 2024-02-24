@@ -13,7 +13,6 @@ export class adminChecker implements NestMiddleware {
             let token = req.headers.authorization?.split(' ')[1] 
 
             const decoded = this.jwtService.verify(token, { secret: process.env.JWT_AUTH_SECRET })
-            req.body.decoded = decoded
             res.locals.decoded = decoded
             if (decoded.role.isAdmin) next()
             else res.status(HttpStatus.UNAUTHORIZED).send(errorMessages.CANT_ACCESS_HERE)

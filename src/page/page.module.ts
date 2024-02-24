@@ -22,6 +22,7 @@ import { adminChecker } from 'src/shared/middlewares/adminChecker.middleware';
 })
 export class PageModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer.apply(adminChecker).forRoutes({ path: 'page/user/:id', method: RequestMethod.POST })
     consumer.apply(userLoginChecker).forRoutes({ path: 'page', method: RequestMethod.POST })
     consumer.apply(userLoginChecker).forRoutes({ path: 'page', method: RequestMethod.GET })
     consumer.apply(userLoginChecker).forRoutes({ path: 'page/:id/edit', method: RequestMethod.PUT })
