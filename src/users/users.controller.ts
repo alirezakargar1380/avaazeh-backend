@@ -112,6 +112,17 @@ export class UserController {
     constructor(
         private readonly userService: UsersService
     ) { }
+    
+    @Get('/telegram_id/:telegram_id')
+    async getUserByTelegram(@Param('telegram_id') param: string, @Res() res: Response) {
+        try {
+            console.log(param)
+            const user = await this.userService.getUserByTelegram(param)
+            res.status(HttpStatus.ACCEPTED).send(user)
+        } catch(e) {
+
+        }
+    }
 
     @Get("/:user_id")
     async getOneUsers(@Param('user_id') userId: number, @Query() query: any, @Res() res: Response) {
@@ -124,14 +135,5 @@ export class UserController {
         }
     }
 
-    @Get('/telegram_id/:telegram_id')
-    async getUserByTelegram(@Param('telegram_id') param: string, @Res() res: Response) {
-        try {
-            console.log(param)
-            const user = await this.userService.getUserByTelegram(param)
-            res.status(HttpStatus.ACCEPTED).send(user)
-        } catch(e) {
-
-        }
-    }
+    
 }
