@@ -52,17 +52,6 @@ export class UsersController {
         }
     }
 
-    @Get('/telegram_id/:telegram_id')
-    async getUserByTelegram(@Param('telegram_id') param: string, @Res() res: Response) {
-        try {
-            console.log(param)
-            const user = await this.userService.getUserByTelegram(param)
-            res.status(HttpStatus.ACCEPTED).send(user)
-        } catch(e) {
-
-        }
-    }
-
     @Get("/:perPage/:page")
     async getUsers(@Param() param: any, @Query() query: any, @Res() res: Response) {
         try {
@@ -95,6 +84,17 @@ export class UsersController {
             console.error(e)
             if (e.isThrow) return res.status(HttpStatus.METHOD_NOT_ALLOWED).send(errorMessages.CHECK_YOUR_DATA);
             res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(errorMessages.INTERNAL_SERVER);
+        }
+    }
+
+    @Get('/telegram_id/:telegram_id')
+    async getUserByTelegram(@Param('telegram_id') param: string, @Res() res: Response) {
+        try {
+            console.log(param)
+            const user = await this.userService.getUserByTelegram(param)
+            res.status(HttpStatus.ACCEPTED).send(user)
+        } catch(e) {
+
         }
     }
 
