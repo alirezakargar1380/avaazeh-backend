@@ -14,6 +14,7 @@ import { OrdersModule } from './orders/orders.module';
 import { WalletModule } from './wallet/wallet.module';
 import { GatewayModule } from './gateway/gateway.module';
 import { WalletLogsModule } from './wallet_logs/wallet_logs.module';
+import { PagePackagesModule } from './page_packages/page_packages.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { WalletLogsModule } from './wallet_logs/wallet_logs.module';
     WalletModule,
     GatewayModule,
     WalletLogsModule,
+    PagePackagesModule,
   ],
   controllers: [
     AppController

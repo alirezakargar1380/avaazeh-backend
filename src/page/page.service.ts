@@ -15,8 +15,10 @@ export class PageService {
                 user: { id: user.id }
             },
             relations: {
-                // belongsTo: true,
-                package: true,
+                packages: {
+                    package: true,
+                    page: true
+                },
                 user: true
             }
         })

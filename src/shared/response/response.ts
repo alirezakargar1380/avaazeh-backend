@@ -4,7 +4,7 @@ import { loginMessages } from "src/authentication/constants";
 import errorMessages from "../constants/errorMessages";
 
 export const error_response = (e: any, res: Response) => {
-    console.log(e.message)
+    console.log(e)
 
     if (e?.response?.statusCode)
         return res.status(e.response.statusCode).send(e.response.message)

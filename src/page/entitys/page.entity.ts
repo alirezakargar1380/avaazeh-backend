@@ -1,6 +1,7 @@
 import { Package } from 'src/package/entitys/package.entity';
+import { PagePackage } from 'src/page_packages/entitys/page_package.entity';
 import { User } from 'src/users/entitys/users.entity';
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
 export class Page {
@@ -20,11 +21,8 @@ export class Page {
     // @JoinColumn()
     // belongsTo: User;
 
-    @ManyToOne(() => Package, pac => pac.id, {
-        onDelete: 'SET NULL'
-    })
-    @JoinColumn()
-    package: Package; // every page has their package and amount
+    @OneToMany(() => PagePackage, pac => pac.page)
+    packages: PagePackage[];
 
     @Column({ type: 'integer' })
     followersCount: number;
