@@ -27,7 +27,7 @@ export class Page {
     @Column({ type: 'integer' })
     followersCount: number;
 
-    @Column({ default: null, nullable: true })
+    @Column({ default: null, nullable: true, unique: true })
     username: string;
 
     @Column()
@@ -35,6 +35,9 @@ export class Page {
     
     @Column()
     subject: string;
+    
+    @Column()
+    verified: boolean;
     
     @Column()
     city: string;
