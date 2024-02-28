@@ -15,6 +15,16 @@ export class WalletService {
     @InjectRepository(Orders) private ordersRepository: Repository<Orders>,
   ) { }
 
+  get_wallet_details(user_id: number) {
+    return this.walletRepository.findOne({
+      where: {
+        user: {
+          id: user_id
+        }
+      }
+    })
+  }
+
   async payOrder(order_id: number, user_id: number) {
     const wallet = await this.walletRepository.findOne({
       where: {

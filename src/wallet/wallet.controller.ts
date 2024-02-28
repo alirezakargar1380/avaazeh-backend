@@ -8,6 +8,15 @@ import { Response } from 'express';
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
 
+  @Get()
+  async wallet_details(@Res() res: Response) {
+    try {
+      res.status(HttpStatus.ACCEPTED).send(await this.walletService.get_wallet_details(res.locals.user.id))
+    } catch(e) {
+      res.status(HttpStatus.BAD_GATEWAY).send(e)
+    }
+  }
+
   @Post('/pay/order/:id')
   async payOrder(@Param('id') order_id: string, @Res() res: Response) {
     try {
