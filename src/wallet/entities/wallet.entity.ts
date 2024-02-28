@@ -11,6 +11,11 @@ export class Wallets {
     })
     budget: number;
 
+    @Column({
+        default: ''
+    })
+    shaba: string;
+
     @OneToOne(() => User, user => user.id, {
         onDelete: 'SET NULL',
     })

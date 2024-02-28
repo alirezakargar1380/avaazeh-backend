@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus, Put } from '@nestjs/common';
 import { WalletService } from './wallet.service';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
@@ -11,6 +11,16 @@ export class WalletController {
   @Get()
   async wallet_details(@Res() res: Response) {
     try {
+      res.status(HttpStatus.ACCEPTED).send(await this.walletService.get_wallet_details(res.locals.user.id))
+    } catch(e) {
+      res.status(HttpStatus.BAD_GATEWAY).send(e)
+    }
+  }
+
+  @Put()
+  async update_wallet_details(@Body() body: any, @Res() res: Response) {
+    try {
+      await this.walletService.update_wallet_details(res.locals.user.id, body)
       res.status(HttpStatus.ACCEPTED).send(await this.walletService.get_wallet_details(res.locals.user.id))
     } catch(e) {
       res.status(HttpStatus.BAD_GATEWAY).send(e)

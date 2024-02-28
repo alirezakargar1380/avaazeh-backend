@@ -15,12 +15,25 @@ export class WalletService {
     @InjectRepository(Orders) private ordersRepository: Repository<Orders>,
   ) { }
 
+  update_wallet_details(user_id: number, body: any) {
+    return this.walletRepository.update({
+      user: {
+        id: user_id
+      }
+    }, {
+      shaba: body?.shaba
+    })
+  }
+
   get_wallet_details(user_id: number) {
     return this.walletRepository.findOne({
       where: {
         user: {
           id: user_id
         }
+      },
+      relations: {
+        user: true
       }
     })
   }
